@@ -59,13 +59,29 @@ function taskPopUp () {
 
     const taskTypeLabel = document.createElement('label');
     taskTypeLabel.setAttribute('for', 'type');
+    taskTypeLabel.innerHTML = "Type of Task:";
 
-    const taskTypeType = document.createElement('input');
-    taskTypeType.setAttribute('type', '');
+    const taskTypeType = document.createElement('select');
     taskTypeType.setAttribute('id', 'type');
+    taskTypeType.setAttribute('name', 'type');
+
+    const project = document.createElement('option');
+    project.setAttribute('value', 'project');
+    project.innerHTML = 'Project';
+
+    const toDo = document.createElement('option');
+    toDo.setAttribute('value', 'todo');
+    toDo.innerHTML = 'To Do';
+
+    const note = document.createElement('option');
+    note.setAttribute('value', 'note');
+    note.innerHTML = 'Note';
 
     taskType.appendChild(taskTypeLabel);
     taskType.appendChild(taskTypeType);
+    taskTypeType.appendChild(project);
+    taskTypeType.appendChild(toDo);
+    taskTypeType.appendChild(note);
 
     taskForm.appendChild(taskType);
 
@@ -77,7 +93,7 @@ function taskPopUp () {
     taskTypeLabel.setAttribute('for', 'date');
 
     const taskDateType = document.createElement('input');
-    taskDateType.setAttribute('date', '');
+    taskDateType.setAttribute('type', '');
     taskDateType.setAttribute('id', 'date');
 
     taskDate.appendChild(taskDateLabel);
@@ -91,10 +107,11 @@ function taskPopUp () {
 
     const taskDetailsLabel = document.createElement('label');
     taskDetailsLabel.setAttribute('for', 'details');
+    taskDetailsLabel.innerHTML = 'Details:';
 
     const taskDetailsType = document.createElement('input');
-    taskTypeType.setAttribute('details', '');
-    taskTypeType.setAttribute('id', 'details');
+    taskDetailsType.setAttribute('type', 'text');
+    taskDetailsType.setAttribute('id', 'details');
 
     taskDetails.appendChild(taskDetailsLabel);
     taskDetails.appendChild(taskDetailsType);
@@ -105,12 +122,25 @@ function taskPopUp () {
     const taskPriority = document.createElement('div');
     taskPriority.setAttribute('id', 'task-Priority');
 
-    const taskPriorityLabel = document.createElement('label');
-    taskPriorityLabel.setAttribute('for', 'Priority');
+    const taskPriorityUrgentLabel = document.createElement('label');
+    const taskPriorityUrgentInput = document.createElement('input');
 
-    const taskPriorityType = document.createElement('input');
-    taskPriorityType.setAttribute('type', '');
-    taskPriorityType.setAttribute('id', 'Priority');
+    taskPriorityUrgentInput.setAttribute('type', 'radio');
+    taskPriorityUrgentInput.setAttribute('value', 'urgent');
+    taskPriorityUrgentInput.setAttribute('name', 'task-priority')
+    taskPriorityUrgentInput.setAttribute('id', 'urgent');
+
+    taskPriorityUrgentLabel.appendChild(taskPriorityUrgentInput);
+
+    const taskPriorityMediumLabel = document.createElement('label');
+    const taskPriorityMediumInput = document.createElement('input');
+
+    taskPriorityMediumInput.setAttribute('type', 'radio');
+    taskPriorityMediumInput.setAttribute('value', 'medium');
+    taskPriorityMediumInput.setAttribute('name', 'task-priority')
+    taskPriorityMediumInput.setAttribute('id', 'medium');
+
+    taskPriorityMediumLabel.appendChild(taskPriorityUrgentInput);
 
     taskPriority.appendChild(taskPriorityLabel);
     taskPriority.appendChild(taskPriorityType);
