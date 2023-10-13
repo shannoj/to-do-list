@@ -140,10 +140,21 @@ function taskPopUp () {
     taskPriorityMediumInput.setAttribute('name', 'task-priority')
     taskPriorityMediumInput.setAttribute('id', 'medium');
 
-    taskPriorityMediumLabel.appendChild(taskPriorityUrgentInput);
+    taskPriorityMediumLabel.appendChild(taskPriorityRelaxedInput);
 
-    taskPriority.appendChild(taskPriorityLabel);
-    taskPriority.appendChild(taskPriorityType);
+    const taskPriorityRelaxedLabel = document.createElement('label');
+    const taskPriorityRelaxedInput = document.createElement('input');
+
+    taskPriorityRelaxedInput.setAttribute('type', 'radio');
+    taskPriorityRelaxedInput.setAttribute('value', 'relaxed');
+    taskPriorityRelaxedInput.setAttribute('name', 'task-priority')
+    taskPriorityRelaxedInput.setAttribute('id', 'relaxed');
+
+    taskPriorityRelaxedLabel.appendChild(taskPriorityRelaxedInput);
+
+    taskPriority.appendChild(taskPriorityUrgentLabel);
+    taskPriority.appendChild(taskPriorityMediumLabel);
+    taskPriority.appendChild(taskPriorityRelaxedLabel);
 
     taskForm.appendChild(taskPriority);
 
