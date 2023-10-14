@@ -97,7 +97,7 @@ function taskPopUp() {
     taskDateLabel.innerHTML = "Due Date: ";
 
     const taskDateType = document.createElement('input');
-    taskDateType.setAttribute('type', '');
+    taskDateType.setAttribute('type', 'date');
     taskDateType.setAttribute('id', 'date');
 
     taskDate.appendChild(taskDateLabel);
