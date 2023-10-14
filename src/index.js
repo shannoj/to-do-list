@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import './style.css';
-import { container } from 'webpack';
 
 //function that initializes a task
 function task(type, date, details, priority){
@@ -9,6 +8,174 @@ function task(type, date, details, priority){
     this.details = details;
     this.priority = priority;
 }
+
+//simple function to remove an element
+function removeElement (elementid){
+    const element = document.getElementById(elementid)
+    if (element){
+        element.remove();
+    };
+    console.log('hello');
+};
+
+//function will create a pop up form that allows user to add a new task
+function taskPopUp() {
+
+    //setting up the container for the pop up form to add a new task
+    const popUpContainer = document.createElement('div');
+    popUpContainer.setAttribute('id', 'pop-up-container');
+    
+    //setting up actual task form
+    const taskForm = document.createElement('form');
+    taskForm.setAttribute('id', 'task-form');
+    popUpContainer.appendChild(taskForm);
+
+    //setting up the close button and a container for it
+    const closeButtonContainer = document.createElement('div');
+    closeButtonContainer.setAttribute('id', 'close-button-container');
+    taskForm.appendChild(closeButtonContainer);
+
+    const closeForm = document.createElement('button');
+    closeForm.setAttribute('id', 'close-form');
+    closeForm.setAttribute('type', 'button');
+    closeForm.innerHTML = 'x';
+    closeForm.addEventListener('click', function(){
+        removeElement('pop-up-container')
+    });
+
+    closeButtonContainer.appendChild(closeForm);
+    
+    //setting up a container for the questions of the task form
+    const questionContainer = document.createElement('div');
+    questionContainer.setAttribute('id', 'question-container');
+
+    taskForm.appendChild(questionContainer);
+
+    //creating form questions for the type of task
+    const taskType = document.createElement('div');
+    taskType.setAttribute('id', 'task-type');
+
+    const taskTypeLabel = document.createElement('label');
+    taskTypeLabel.setAttribute('for', 'type');
+    taskTypeLabel.innerHTML = "Type of Task: ";
+
+    const taskSelectDiv = document.createElement('div');
+    taskSelectDiv.setAttribute('id', 'task-div');
+
+    const taskTypeType = document.createElement('select');
+    taskTypeType.setAttribute('id', 'type');
+    taskTypeType.setAttribute('name', 'type');
+
+    const project = document.createElement('option');
+    project.setAttribute('value', 'project');
+    project.innerHTML = 'Project';
+
+    const toDo = document.createElement('option');
+    toDo.setAttribute('value', 'todo');
+    toDo.innerHTML = 'To Do';
+
+    const note = document.createElement('option');
+    note.setAttribute('value', 'note');
+    note.innerHTML = 'Note';
+
+    taskType.appendChild(taskTypeLabel);
+    taskSelectDiv.appendChild(taskTypeType);
+    taskType.appendChild(taskSelectDiv);
+    taskTypeType.appendChild(project);
+    taskTypeType.appendChild(toDo);
+    taskTypeType.appendChild(note);
+
+    questionContainer.appendChild(taskType);
+
+    //creating form questions for the due date of the task
+    const taskDate = document.createElement('div');
+    taskDate.setAttribute('id', 'task-date');
+
+    const taskDateLabel = document.createElement('label');
+    taskTypeLabel.setAttribute('for', 'date');
+    taskTypeLabel.setAttribute('id', 'task-type-label');
+    taskDateLabel.innerHTML = "Due Date: ";
+
+    const taskDateType = document.createElement('input');
+    taskDateType.setAttribute('type', '');
+    taskDateType.setAttribute('id', 'date');
+
+    taskDate.appendChild(taskDateLabel);
+    taskDate.appendChild(taskDateType);
+
+    questionContainer.appendChild(taskDate);
+
+    //creating form questions for the details of the task
+    const taskDetails = document.createElement('div');
+    taskType.setAttribute('id', 'task-details');
+
+    const taskDetailsLabel = document.createElement('label');
+    taskDetailsLabel.setAttribute('for', 'details');
+    taskDetailsLabel.innerHTML = 'Details: ';
+
+    const taskDetailsType = document.createElement('input');
+    taskDetailsType.setAttribute('type', 'text');
+    taskDetailsType.setAttribute('id', 'details');
+
+    taskDetails.appendChild(taskDetailsLabel);
+    taskDetails.appendChild(taskDetailsType);
+
+    questionContainer.appendChild(taskDetails);
+
+    //createing form questoins for priority level of task
+    const taskPriority = document.createElement('div');
+    taskPriority.setAttribute('id', 'task-Priority');
+
+    const taskPriorityUrgentLabel = document.createElement('label');
+    const taskPriorityUrgentInput = document.createElement('input');
+
+    taskPriorityUrgentInput.setAttribute('type', 'radio');
+    taskPriorityUrgentInput.setAttribute('value', 'urgent');
+    taskPriorityUrgentInput.setAttribute('name', 'task-priority')
+    taskPriorityUrgentInput.setAttribute('id', 'urgent');
+    taskPriorityUrgentLabel.innerHTML = 'Urgent';
+
+    taskPriorityUrgentLabel.appendChild(taskPriorityUrgentInput);
+
+    const taskPriorityMediumLabel = document.createElement('label');
+    const taskPriorityMediumInput = document.createElement('input');
+
+    taskPriorityMediumInput.setAttribute('type', 'radio');
+    taskPriorityMediumInput.setAttribute('value', 'medium');
+    taskPriorityMediumInput.setAttribute('name', 'task-priority')
+    taskPriorityMediumInput.setAttribute('id', 'medium');
+    taskPriorityMediumLabel.innerHTML = 'Medium';
+
+    taskPriorityMediumLabel.appendChild(taskPriorityMediumInput);
+
+    const taskPriorityRelaxedLabel = document.createElement('label');
+    const taskPriorityRelaxedInput = document.createElement('input');
+
+    taskPriorityRelaxedInput.setAttribute('type', 'radio');
+    taskPriorityRelaxedInput.setAttribute('value', 'relaxed');
+    taskPriorityRelaxedInput.setAttribute('name', 'task-priority')
+    taskPriorityRelaxedInput.setAttribute('id', 'relaxed');
+    taskPriorityRelaxedLabel.innerHTML = 'No Rush';
+
+    taskPriorityRelaxedLabel.appendChild(taskPriorityRelaxedInput);
+
+    taskPriority.appendChild(taskPriorityUrgentLabel);
+    taskPriority.appendChild(taskPriorityMediumLabel);
+    taskPriority.appendChild(taskPriorityRelaxedLabel);
+
+    questionContainer.appendChild(taskPriority);
+
+    //setting up submit button for the form
+    const submitForm = document.createElement('button');
+    submitForm.setAttribute('type', 'submit');
+    submitForm.setAttribute('id', 'submit-form');
+    submitForm.innerHTML = 'Submit';
+
+    questionContainer.appendChild(submitForm);
+
+    document.body.appendChild(popUpContainer);
+
+};
 
 //this function creates the main elements of the webpage
 function createElements(){
@@ -36,128 +203,14 @@ function createElements(){
     //creating the button that allows you to add tasks
     const addButton = document.createElement('button');
     addButton.setAttribute('id', 'add-button');
-    addButton.innerHTML = "+";
+    addButton.innerHTML = "New Task";
+
+    addButton.addEventListener('click', taskPopUp);
 
     sideBar.appendChild(addButton);
 
     return container;
 }
 
-//function will create a pop up form that allows user to add a new task
-function taskPopUp () {
-    //setting up the container for the pop up form to add a new task
-    const popUpContainer = document.createElement('div');
-    popUpContainer.setAttribute('id', 'pop-up-container');
-    
-    const taskForm = document.createElement('form');
-    taskForm.setAttribute('id', 'task-form');
-    popUpContainer.appendChild(taskForm);
-
-    //creating form questions for the type of task
-    const taskType = document.createElement('div');
-    taskType.setAttribute('id', 'task-type');
-
-    const taskTypeLabel = document.createElement('label');
-    taskTypeLabel.setAttribute('for', 'type');
-    taskTypeLabel.innerHTML = "Type of Task:";
-
-    const taskTypeType = document.createElement('select');
-    taskTypeType.setAttribute('id', 'type');
-    taskTypeType.setAttribute('name', 'type');
-
-    const project = document.createElement('option');
-    project.setAttribute('value', 'project');
-    project.innerHTML = 'Project';
-
-    const toDo = document.createElement('option');
-    toDo.setAttribute('value', 'todo');
-    toDo.innerHTML = 'To Do';
-
-    const note = document.createElement('option');
-    note.setAttribute('value', 'note');
-    note.innerHTML = 'Note';
-
-    taskType.appendChild(taskTypeLabel);
-    taskType.appendChild(taskTypeType);
-    taskTypeType.appendChild(project);
-    taskTypeType.appendChild(toDo);
-    taskTypeType.appendChild(note);
-
-    taskForm.appendChild(taskType);
-
-    //creating form questions for the due date of the task
-    const taskDate = document.createElement('div');
-    taskDate.setAttribute('id', 'task-date');
-
-    const taskDateLabel = document.createElement('label');
-    taskTypeLabel.setAttribute('for', 'date');
-
-    const taskDateType = document.createElement('input');
-    taskDateType.setAttribute('type', '');
-    taskDateType.setAttribute('id', 'date');
-
-    taskDate.appendChild(taskDateLabel);
-    taskDate.appendChild(taskDateType);
-
-    taskForm.appendChild(taskDate);
-
-    //creating form questions for the details of the task
-    const taskDetails = document.createElement('div');
-    taskType.setAttribute('id', 'task-details');
-
-    const taskDetailsLabel = document.createElement('label');
-    taskDetailsLabel.setAttribute('for', 'details');
-    taskDetailsLabel.innerHTML = 'Details:';
-
-    const taskDetailsType = document.createElement('input');
-    taskDetailsType.setAttribute('type', 'text');
-    taskDetailsType.setAttribute('id', 'details');
-
-    taskDetails.appendChild(taskDetailsLabel);
-    taskDetails.appendChild(taskDetailsType);
-
-    taskForm.appendChild(taskDetails);
-
-    //createing form questoins for priority level of task
-    const taskPriority = document.createElement('div');
-    taskPriority.setAttribute('id', 'task-Priority');
-
-    const taskPriorityUrgentLabel = document.createElement('label');
-    const taskPriorityUrgentInput = document.createElement('input');
-
-    taskPriorityUrgentInput.setAttribute('type', 'radio');
-    taskPriorityUrgentInput.setAttribute('value', 'urgent');
-    taskPriorityUrgentInput.setAttribute('name', 'task-priority')
-    taskPriorityUrgentInput.setAttribute('id', 'urgent');
-
-    taskPriorityUrgentLabel.appendChild(taskPriorityUrgentInput);
-
-    const taskPriorityMediumLabel = document.createElement('label');
-    const taskPriorityMediumInput = document.createElement('input');
-
-    taskPriorityMediumInput.setAttribute('type', 'radio');
-    taskPriorityMediumInput.setAttribute('value', 'medium');
-    taskPriorityMediumInput.setAttribute('name', 'task-priority')
-    taskPriorityMediumInput.setAttribute('id', 'medium');
-
-    taskPriorityMediumLabel.appendChild(taskPriorityRelaxedInput);
-
-    const taskPriorityRelaxedLabel = document.createElement('label');
-    const taskPriorityRelaxedInput = document.createElement('input');
-
-    taskPriorityRelaxedInput.setAttribute('type', 'radio');
-    taskPriorityRelaxedInput.setAttribute('value', 'relaxed');
-    taskPriorityRelaxedInput.setAttribute('name', 'task-priority')
-    taskPriorityRelaxedInput.setAttribute('id', 'relaxed');
-
-    taskPriorityRelaxedLabel.appendChild(taskPriorityRelaxedInput);
-
-    taskPriority.appendChild(taskPriorityUrgentLabel);
-    taskPriority.appendChild(taskPriorityMediumLabel);
-    taskPriority.appendChild(taskPriorityRelaxedLabel);
-
-    taskForm.appendChild(taskPriority);
-
-}
-
 document.body.appendChild(createElements());
+
