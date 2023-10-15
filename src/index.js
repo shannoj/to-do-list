@@ -18,6 +18,35 @@ function removeElement (elementid){
     console.log('hello');
 };
 
+//function that adds task to the DOM
+function addTask(){
+    const taskType = document.getElementById('type').value;
+    const taskDueDate = document.getElementById('date').value;
+    const taskDetails = document.getElementById('details').value;
+
+
+    const container = document.getElementById('task-area');
+    const taskDiv = document.createElement('div');
+    taskDiv.setAttribute('id', 'user-task-div');
+
+    container.appendChild(taskDiv);
+
+    const taskName = document.createElement('div');
+    taskName.setAttribute('id', 'task-name');
+
+    const taskDetailsDiv = document.createElement('div');
+    taskDetailsDiv.setAttribute('id', 'task-details-DOM');
+    taskDetailsDiv.innerHTML = taskDetails;
+
+    taskDiv.appendChild(taskName);
+    taskDiv.appendChild(taskDetailsDiv);
+
+    console.log('hello');
+
+    removeElement('pop-up-container');
+
+};
+
 //function will create a pop up form that allows user to add a new task
 function taskPopUp() {
 
@@ -170,6 +199,10 @@ function taskPopUp() {
     submitForm.setAttribute('type', 'submit');
     submitForm.setAttribute('id', 'submit-form');
     submitForm.innerHTML = 'Submit';
+    taskForm.addEventListener('submit' , function(e){
+        e.preventDefault();
+        addTask();
+    });
 
     questionContainer.appendChild(submitForm);
 
