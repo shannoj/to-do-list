@@ -161,7 +161,6 @@ body{
     display: flex;
     justify-content: space-evenly;
     background-color: #808080;
-    border-radius: 15%;
     padding-bottom: 15px;
     padding-top: 15px;
     margin-bottom: 15px;
@@ -179,7 +178,23 @@ body{
     display: flex;
 }
 
+#delete-div{
+    margin: 10px;
+}
 
+#edit-div{
+    margin: 10px;
+}
+
+#edit-picture{
+    height: 100%;
+    cursor: pointer;
+}
+
+#delete-picture{
+    height: 100%;
+    cursor: pointer;
+}
 
 @keyframes slideIn {
     0% {

@@ -1,5 +1,8 @@
 import _ from 'lodash';
 import './style.css';
+import editIcon from './editIcon.png';
+import deleteIcon from './deleteIcon.png';
+
 
 //function that initializes a task
 function task(type, date, details, priority){
@@ -20,28 +23,86 @@ function removeElement (elementid){
 
 //function that adds task to the DOM
 function addTask(){
-    const taskType = document.getElementById('type').value;
+    const editPicture = new Image();
+    editPicture.src = editIcon;
+    editPicture.setAttribute('id', 'edit-picture');
+
+    const deletePicture = new Image();
+    deletePicture.src = deleteIcon;
+    deletePicture.setAttribute('id', 'delete-picture');
+
+    let taskType = document.getElementById('type').value;
     const taskDueDate = document.getElementById('date').value;
     const taskDetails = document.getElementById('details').value;
+    const formInput = document.getElementById('task-form');
 
+    var taskUrgency = formInput.elements['task-priority'];
+    var taskUrgencySelected = null;
+
+    //getting the value of selected radio button
+    for (var i = 0; i < taskUrgency.length; i++){
+        if (taskUrgency[i].checked){
+            taskUrgencySelected = taskUrgency[i].value;
+        }
+    };
+
+    //editing value of the type of task
+    if (taskType == 'project'){
+        taskType = 'Project';
+    };
+
+    if (taskType == 'todo'){
+        taskType = 'To Do';
+    };
+
+    if (taskType == 'note'){
+        taskType = "Note";
+    };
 
     const container = document.getElementById('task-area');
     const taskDiv = document.createElement('div');
     taskDiv.setAttribute('id', 'user-task-div');
 
+    //setting background color of task to match the urgency
+    if (taskUrgencySelected == 'urgent'){
+        taskDiv.style.backgroundColor = 'red';
+    };
+
+    if (taskUrgencySelected == 'medium'){
+        taskDiv.style.backgroundColor = 'yellow';
+    };
+
+    if (taskUrgencySelected == 'relaxed'){
+        taskDiv.style.backgroundColor = 'lightblue'
+    };
+
     container.appendChild(taskDiv);
 
     const taskName = document.createElement('div');
     taskName.setAttribute('id', 'task-name');
+    taskName.innerHTML = taskType
 
     const taskDetailsDiv = document.createElement('div');
     taskDetailsDiv.setAttribute('id', 'task-details-DOM');
     taskDetailsDiv.innerHTML = taskDetails;
 
+    const taskDueDateDiv = document.createElement('div');
+    taskDueDateDiv.setAttribute('id', 'task-due-date-div');
+    taskDueDateDiv.innerHTML = 'Due on: ' + taskDueDate;
+
+    const deleteDiv = document.createElement('div');
+    deleteDiv.setAttribute('id', 'delete-div');
+    deleteDiv.appendChild(deletePicture);
+
+    const editDiv = document.createElement('div');
+    editDiv.setAttribute('id', 'edit-div')
+    editDiv.appendChild(editPicture);
+
     taskDiv.appendChild(taskName);
     taskDiv.appendChild(taskDetailsDiv);
-
-    console.log('hello');
+    taskDiv.appendChild(taskDueDateDiv);
+    taskDiv.appendChild(editDiv);
+    taskDiv.appendChild(deleteDiv);
 
     removeElement('pop-up-container');
 
