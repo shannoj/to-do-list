@@ -294,6 +294,22 @@ function createElements(){
     sideBarTasks.setAttribute('id', 'side-bar-tasks');
     sideBar.appendChild(sideBarTasks);
 
+    const projectsTab = document.createElement('div');
+    projectsTab.setAttribute('id', 'projects-tab')
+    projectsTab.innerHTML = 'Projects';
+
+    const todoTab = document.createElement('div');
+    todoTab.setAttribute('id', 'todo-tab');
+    todoTab.innerHTML = 'To Do';
+
+    const noteTab = document.createElement('div');
+    noteTab.setAttribute('id', 'note-tab');
+    noteTab.innerHTML = 'Notes';
+
+    sideBarTasks.appendChild(projectsTab);
+    sideBarTasks.appendChild(todoTab);
+    sideBarTasks.appendChild(noteTab);
+
     //creating the button that allows you to add tasks
     const addButton = document.createElement('button');
     addButton.setAttribute('id', 'add-button');
