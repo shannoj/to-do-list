@@ -167,14 +167,15 @@ function addTask(){
     };
 
     //creating new task element and adding it to an array
-    let newTask = new task(taskType, taskDueDate, taskDetails, taskUrgencySelected);
+    let timeStamp = new Date().getTime();
+    timeStamp = new task(taskType, taskDueDate, taskDetails, taskUrgencySelected);
 
     if (taskType === 'Project'){
-        projectList.push(newTask);
+        projectList.push(timeStamp);
     } else if (taskType == 'To Do'){
-        todoList.push(newTask);
+        todoList.push(timeStamp);
     } else if (taskType == 'Note'){
-        notesList.push(newTask);
+        notesList.push(timeStamp);
     }
 
     container.appendChild(taskDiv);
