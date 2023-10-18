@@ -3,7 +3,9 @@ import './style.css';
 import editIcon from './editIcon.png';
 import deleteIcon from './deleteIcon.png';
 
-let taskList = [];
+let projectList = [];
+let notesList = [];
+let todoList = [];
 
 //function that initializes a task
 function task(type, date, details, priority){
@@ -19,6 +21,93 @@ function removeElement (elementid){
     if (element){
         element.remove();
     };
+};
+
+function displayTasks(tabType){
+    const container = document.getElementById('task-area');
+    container.innerHTML = '';
+
+  let taskArray = [];
+  if (tabType === 'projects') {
+    taskArray = projectList;
+  } else if (tabType === 'todo') {
+    taskArray = todoList;
+  } else if (tabType === 'notes') {
+    taskArray = notesList;
+  }
+
+  taskArray.forEach((task) => {
+    const taskDiv = document.createElement('div');
+    // Create elements to display task details
+    const editPicture = new Image();
+    editPicture.src = editIcon;
+    editPicture.setAttribute('id', 'edit-picture');
+
+    const deletePicture = new Image();
+    deletePicture.src = deleteIcon;
+    deletePicture.setAttribute('id', 'delete-picture');
+
+    let taskType = task.type;
+    const taskDueDate = task.date;
+    const taskDetails = task.details;
+    const formInput = document.getElementById('task-form');
+    var taskUrgencySelected = task.priority;
+
+    const container = document.getElementById('task-area');
+    taskDiv.setAttribute('class', 'user-task-div');
+    taskDiv.setAttribute('id', 'user-task-'+taskDetails);
+
+    //setting background color of task to match the urgency
+    if (taskUrgencySelected == 'urgent'){
+        taskDiv.style.backgroundColor = 'red';
+    };
+
+    if (taskUrgencySelected == 'medium'){
+        taskDiv.style.backgroundColor = 'yellow';
+    };
+
+    if (taskUrgencySelected == 'relaxed'){
+        taskDiv.style.backgroundColor = 'lightblue'
+    };
+    
+    container.appendChild(taskDiv);
+
+    const taskName = document.createElement('div');
+    taskName.setAttribute('id', 'task-name');
+    taskName.innerHTML = taskType
+
+    const taskDetailsDiv = document.createElement('div');
+    taskDetailsDiv.setAttribute('id', 'task-details-DOM');
+    taskDetailsDiv.innerHTML = taskDetails;
+
+    const taskDueDateDiv = document.createElement('div');
+    taskDueDateDiv.setAttribute('id', 'task-due-date-div');
+    taskDueDateDiv.innerHTML = 'Due on: ' + taskDueDate;
+
+    const deleteDiv = document.createElement('div');
+    deleteDiv.setAttribute('id', 'delete-div');
+    deleteDiv.appendChild(deletePicture);
+    deletePicture.addEventListener('click', function(){
+        removeElement('user-task-'+taskDetails);
+    });
+
+    const editDiv = document.createElement('div');
+    editDiv.setAttribute('id', 'edit-div')
+    editDiv.appendChild(editPicture);
+    //editDiv.addEventListener('click', );
+
+    taskDiv.appendChild(taskName);
+    taskDiv.appendChild(taskDetailsDiv);
+    taskDiv.appendChild(taskDueDateDiv);
+    taskDiv.appendChild(editDiv);
+    taskDiv.appendChild(deleteDiv);
+
+    removeElement('pop-up-container');
+  });
+
+  console.log(projectList);
+  console.log(todoList);
+  console.log(notesList);
 };
 
 //function that adds task to the DOM
@@ -77,9 +166,16 @@ function addTask(){
         taskDiv.style.backgroundColor = 'lightblue'
     };
 
+    //creating new task element and adding it to an array
     let newTask = new task(taskType, taskDueDate, taskDetails, taskUrgencySelected);
 
-    taskList.push(newTask);
+    if (taskType === 'Project'){
+        projectList.push(newTask);
+    } else if (taskType == 'To Do'){
+        todoList.push(newTask);
+    } else if (taskType == 'Note'){
+        notesList.push(newTask);
+    }
 
     container.appendChild(taskDiv);
 
@@ -317,6 +413,18 @@ function createElements(){
     sideBarTasks.appendChild(projectsTab);
     sideBarTasks.appendChild(todoTab);
     sideBarTasks.appendChild(noteTab);
+
+    projectsTab.addEventListener('click', () => {
+    displayTasks('projects');
+    });
+
+    todoTab.addEventListener('click', () => {
+    displayTasks('todo');
+    });
+
+    noteTab.addEventListener('click', () => {
+    displayTasks('notes');
+    });
 
     //creating the button that allows you to add tasks
     const addButton = document.createElement('button');
