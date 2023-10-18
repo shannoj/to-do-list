@@ -157,7 +157,7 @@ body{
     color: #333;
 }
 
-#user-task-div{
+.user-task-div{
     height: 50px;
     width: 85%;
     display: flex;

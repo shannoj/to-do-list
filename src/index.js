@@ -3,6 +3,7 @@ import './style.css';
 import editIcon from './editIcon.png';
 import deleteIcon from './deleteIcon.png';
 
+let taskList = [];
 
 //function that initializes a task
 function task(type, date, details, priority){
@@ -18,7 +19,6 @@ function removeElement (elementid){
     if (element){
         element.remove();
     };
-    console.log('hello');
 };
 
 //function that adds task to the DOM
@@ -61,7 +61,8 @@ function addTask(){
 
     const container = document.getElementById('task-area');
     const taskDiv = document.createElement('div');
-    taskDiv.setAttribute('id', 'user-task-div');
+    taskDiv.setAttribute('class', 'user-task-div');
+    taskDiv.setAttribute('id', 'user-task-'+taskDetails);
 
     //setting background color of task to match the urgency
     if (taskUrgencySelected == 'urgent'){
@@ -75,6 +76,10 @@ function addTask(){
     if (taskUrgencySelected == 'relaxed'){
         taskDiv.style.backgroundColor = 'lightblue'
     };
+
+    let newTask = new task(taskType, taskDueDate, taskDetails, taskUrgencySelected);
+
+    taskList.push(newTask);
 
     container.appendChild(taskDiv);
 
@@ -93,10 +98,14 @@ function addTask(){
     const deleteDiv = document.createElement('div');
     deleteDiv.setAttribute('id', 'delete-div');
     deleteDiv.appendChild(deletePicture);
+    deletePicture.addEventListener('click', function(){
+        removeElement('user-task-'+taskDetails);
+    });
 
     const editDiv = document.createElement('div');
     editDiv.setAttribute('id', 'edit-div')
     editDiv.appendChild(editPicture);
+    //editDiv.addEventListener('click', );
 
     taskDiv.appendChild(taskName);
     taskDiv.appendChild(taskDetailsDiv);
@@ -105,7 +114,6 @@ function addTask(){
     taskDiv.appendChild(deleteDiv);
 
     removeElement('pop-up-container');
-
 };
 
 //function will create a pop up form that allows user to add a new task
