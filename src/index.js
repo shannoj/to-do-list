@@ -154,6 +154,9 @@ function editTask(task, taskDiv, taskType) {
 
 function displayTasks(tabType) {
     const container = document.getElementById('task-area');
+    const noteTab = document.getElementById('note-tab');
+    const projectTab = document.getElementById('projects-tab');
+    const todoTab = document.getElementById('todo-tab');
     container.innerHTML = '';
 
     let taskArray = [];
@@ -542,14 +545,23 @@ function createElements(){
 
     projectsTab.addEventListener('click', () => {
     displayTasks('projects');
+    projectsTab.style.backgroundColor = '#B0E0E6';
+    todoTab.style.backgroundColor = '';
+    noteTab.style.backgroundColor = '';
     });
 
     todoTab.addEventListener('click', () => {
     displayTasks('todo');
+    todoTab.style.backgroundColor = '#B0E0E6';
+    noteTab.style.backgroundColor = '';
+    projectsTab.style.backgroundColor = '';
     });
 
     noteTab.addEventListener('click', () => {
     displayTasks('notes');
+    noteTab.style.backgroundColor = '#B0E0E6';
+    projectsTab.style.backgroundColor = '';
+    todoTab.style.backgroundColor = '';
     });
 
     //creating the button that allows you to add tasks
@@ -565,4 +577,3 @@ function createElements(){
 }
 
 document.body.appendChild(createElements());
-
