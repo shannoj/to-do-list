@@ -23,20 +23,20 @@ function removeElement (elementid){
     };
 };
 
-function deleteTask(taskId, taskType, timeStamp) {
+function deleteTask(taskId, taskType, task) {
     // Remove the task from the respective list
     if (taskType === 'Project') {
-        const index = projectList.findIndex(task => task === timeStamp);
+        const index = projectList.indexOf(task);
         if (index !== -1) {
             projectList.splice(index, 1);
         }
     } else if (taskType === 'To Do') {
-        const index = todoList.findIndex(task => task === timeStamp);
+        const index = todoList.indexOf(task);
         if (index !== -1) {
             todoList.splice(index, 1);
         }
     } else if (taskType === 'Note') {
-        const index = notesList.findIndex(task => task === timeStamp);
+        const index = notesList.indexOf(task);
         if (index !== -1) {
             notesList.splice(index, 1);
         }
@@ -45,6 +45,7 @@ function deleteTask(taskId, taskType, timeStamp) {
     // Remove the task from the DOM
     removeElement(taskId);
 }
+
 
 // Create a function to handle the editing of a task
 function editTask(task, taskDiv, taskType) {
@@ -100,12 +101,39 @@ function editTask(task, taskDiv, taskType) {
 
     saveButton.addEventListener('click', function () {
         const newTaskType = taskTypeSelect.value;
+        
+        // Remove the old task from its list
+        if (taskType === 'Project') {
+            const index = projectList.indexOf(task);
+            if (index !== -1) {
+                projectList.splice(index, 1);
+            }
+        } else if (taskType === 'To Do') {
+            const index = todoList.indexOf(task);
+            if (index !== -1) {
+                todoList.splice(index, 1);
+            }
+        } else if (taskType === 'Note') {
+            const index = notesList.indexOf(task);
+            if (index !== -1) {
+                notesList.splice(index, 1);
+            }
+        }
 
         // Update the task object with the edited details
         task.type = newTaskType; // Update the task type
         task.date = taskDateInput.value;
         task.details = taskDetailsInput.value;
         task.priority = taskPriorityDiv.querySelector('input[type="radio"]:checked').value;
+
+        // Add the edited task to the new list
+        if (newTaskType === 'Project') {
+            projectList.push(task);
+        } else if (newTaskType === 'To Do') {
+            todoList.push(task);
+        } else if (newTaskType === 'Note') {
+            notesList.push(task);
+        }
 
         // Remove the edit form
         removeElement('pop-up-container');
