@@ -7,6 +7,21 @@ let projectList = [];
 let notesList = [];
 let todoList = [];
 
+// Storing tasks in local storage
+function saveTasksToLocalStorage() {
+    localStorage.setItem('tasks', JSON.stringify({ projects: projectList, notes: notesList, todo: todoList }));
+}
+
+function loadTasksFromLocalStorage() {
+    const savedTasks = JSON.parse(localStorage.getItem('tasks'));
+    if (savedTasks) {
+        projectList = savedTasks.projects || [];
+        notesList = savedTasks.notes || [];
+        todoList = savedTasks.todo || [];
+    }
+}
+
+
 //function that initializes a task
 function task(type, date, details, priority){
     this.type = type;
@@ -44,6 +59,8 @@ function deleteTask(taskId, taskType, task) {
 
     // Remove the task from the DOM
     removeElement(taskId);
+
+    saveTasksToLocalStorage();
 }
 
 
@@ -135,6 +152,9 @@ function editTask(task, taskDiv, taskType) {
             notesList.push(task);
         }
 
+        // Update the local storage with the edited task data
+        saveTasksToLocalStorage();
+        
         // Remove the edit form
         removeElement('pop-up-container');
 
@@ -331,6 +351,9 @@ function addTask(){
     } else if (taskType == 'Note'){
         notesList.push(timeStamp);
     }
+
+    // After adding a task, save tasks to local storage
+    saveTasksToLocalStorage();
 
     container.appendChild(taskDiv);
 
@@ -615,3 +638,8 @@ function createElements(){
 }
 
 document.body.appendChild(createElements());
+
+// Load tasks from local storage when the page loads
+loadTasksFromLocalStorage();
+// Display the loaded tasks
+displayTasks('projects'); // You can specify the appropriate tab here
