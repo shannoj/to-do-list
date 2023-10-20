@@ -162,10 +162,19 @@ function displayTasks(tabType) {
     let taskArray = [];
     if (tabType === 'projects') {
         taskArray = projectList;
-    } else if (tabType === 'todo') {
+        projectTab.style.backgroundColor = '#B0E0E6';
+        todoTab.style.backgroundColor = '';
+        noteTab.style.backgroundColor = '';
+    } else if (tabType === 'todo' || tabType === 'To Do' || tabType === 'to dos')  {
         taskArray = todoList;
+        todoTab.style.backgroundColor = '#B0E0E6';
+        projectTab.style.backgroundColor = '';
+        noteTab.style.backgroundColor = '';
     } else if (tabType === 'notes') {
         taskArray = notesList;
+        noteTab.style.backgroundColor = '#B0E0E6';
+        todoTab.style.backgroundColor = '';
+        projectTab.style.backgroundColor = '';
     }
 
     taskArray.forEach((task) => {
@@ -231,11 +240,23 @@ function displayTasks(tabType) {
         taskDiv.appendChild(editDiv);
         taskDiv.appendChild(deleteDiv);
     });
+
+    if (tabType === 'projects') {
+       projectTab.click();
+    } else if (tabType === 'todo' || tabType === 'To Do' || tabType === 'to dos') {
+       todoTab.click();
+    } else if (tabType === 'notes') {
+       noteTab.click();
+    }
 }
 
 
 //function that adds task to the DOM
 function addTask(){
+    const noteTab = document.getElementById('note-tab');
+    const projectTab = document.getElementById('projects-tab');
+    const todoTab = document.getElementById('todo-tab');
+
     const editPicture = new Image();
     editPicture.src = editIcon;
     editPicture.setAttribute('id', 'edit-picture');
@@ -262,14 +283,23 @@ function addTask(){
     //editing value of the type of task
     if (taskType == 'project'){
         taskType = 'Project';
+        projectTab.style.backgroundColor = '#B0E0E6';
+        todoTab.style.backgroundColor = '';
+        noteTab.style.backgroundColor = '';
     };
 
     if (taskType == 'todo'){
         taskType = 'To Do';
+        projectTab.style.backgroundColor = '';
+        todoTab.style.backgroundColor = '#B0E0E6';
+        noteTab.style.backgroundColor = '';
     };
 
     if (taskType == 'note'){
         taskType = "Note";
+        projectTab.style.backgroundColor = '';
+        todoTab.style.backgroundColor = '';
+        noteTab.style.backgroundColor = '#B0E0E6';
     };
 
     const container = document.getElementById('task-area');
@@ -337,6 +367,14 @@ function addTask(){
     taskDiv.appendChild(deleteDiv);
 
     displayTasks(taskType.toLowerCase() + 's');
+
+    if (taskType === 'Projects') {
+        projectTab.click();
+    } else if (taskType === 'To Do') {
+       todoTab.click();
+    } else if (taskType === 'Note') {
+        noteTab.click();
+    }
 
     removeElement('pop-up-container');
 };
