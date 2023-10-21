@@ -7,6 +7,10 @@ let projectList = [];
 let notesList = [];
 let todoList = [];
 
+function returnListLength(list){
+    return list.length();
+}
+
 // Storing tasks in local storage
 function saveTasksToLocalStorage() {
     localStorage.setItem('tasks', JSON.stringify({ projects: projectList, notes: notesList, todo: todoList }));
@@ -20,7 +24,6 @@ function loadTasksFromLocalStorage() {
         todoList = savedTasks.todo || [];
     }
 }
-
 
 //function that initializes a task
 function task(type, date, details, priority){
@@ -154,7 +157,7 @@ function editTask(task, taskDiv, taskType) {
 
         // Update the local storage with the edited task data
         saveTasksToLocalStorage();
-        
+
         // Remove the edit form
         removeElement('pop-up-container');
 
@@ -261,12 +264,34 @@ function displayTasks(tabType) {
         taskDiv.appendChild(deleteDiv);
     });
 
+    const projectsTabCounter = document.getElementById('projects-tab-counter');
+    const todoTabCounter = document.getElementById('todo-tab-counter');
+    const noteTabCounter = document.getElementById('note-tab-counter');
+
     if (tabType === 'projects') {
        projectTab.click();
+       projectsTabCounter.innerHTML = projectList.length;
+       if (projectList.length > 0){
+        projectsTabCounter.style.display = 'flex';
+    } else {
+        projectsTabCounter.style.display = 'none';
+     }
     } else if (tabType === 'todo' || tabType === 'To Do' || tabType === 'to dos') {
        todoTab.click();
+       todoTabCounter.innerHTML = todoList.length;
+       if (todoList.length > 0){
+        todoTabCounter.style.display = 'flex';
+    } else {
+        todoTabCounter.style.display = 'none';
+     }
     } else if (tabType === 'notes') {
        noteTab.click();
+       noteTabCounter.innerHTML = notesList.length;
+       if (notesList.length > 0){
+        noteTabCounter.style.display = 'flex';
+    } else {
+        noteTabCounter.style.display = 'none';
+     }
     }
 }
 
@@ -391,13 +416,31 @@ function addTask(){
 
     displayTasks(taskType.toLowerCase() + 's');
 
-    if (taskType === 'Projects') {
+    if (taskType === 'projects') {
         projectTab.click();
-    } else if (taskType === 'To Do') {
-       todoTab.click();
-    } else if (taskType === 'Note') {
+        projectsTabCounter.innerHTML = projectList.length;
+        if (projectList.length > 0){
+         projectsTabCounter.style.display = 'flex';
+     } else {
+        projectsTabCounter.style.display = 'none';
+     }
+     } else if (taskType === 'todo' || taskType === 'To Do' || taskType === 'to dos') {
+        todoTab.click();
+        todoTabCounter.innerHTML = todoList.length;
+        if (todoList.length > 0){
+         todoTabCounter.style.display = 'flex';
+     } else {
+        todoTabCounter.style.display = 'none';
+     }
+     } else if (taskType === 'notes') {
         noteTab.click();
-    }
+        noteTabCounter.innerHTML = notesList.length;
+        if (notesList.length > 0){
+         noteTabCounter.style.display = 'flex';
+     } else {
+        notetabCounter.style.display = 'none';
+     }
+     }
 
     removeElement('pop-up-container');
 };
@@ -591,18 +634,29 @@ function createElements(){
     const projectsTab = document.createElement('div');
     projectsTab.setAttribute('id', 'projects-tab')
     projectsTab.innerHTML = 'Projects';
+    let projectsTabCounter = document.createElement('div');
+    projectsTabCounter.setAttribute('id', 'projects-tab-counter');
+    projectsTabCounter.innerHTML = projectList.length;
 
     const todoTab = document.createElement('div');
     todoTab.setAttribute('id', 'todo-tab');
     todoTab.innerHTML = 'To Do';
+    let todoTabCounter = document.createElement('div');
+    todoTabCounter.setAttribute('id', 'todo-tab-counter');
+    todoTabCounter.innerHTML = todoList.length;
 
     const noteTab = document.createElement('div');
     noteTab.setAttribute('id', 'note-tab');
     noteTab.innerHTML = 'Notes';
+    let noteTabCounter = document.createElement('div');
+    noteTabCounter.setAttribute('id', 'note-tab-counter');
 
     sideBarTasks.appendChild(projectsTab);
     sideBarTasks.appendChild(todoTab);
     sideBarTasks.appendChild(noteTab);
+    projectsTab.appendChild(projectsTabCounter);
+    todoTab.appendChild(todoTabCounter);
+    noteTab.appendChild(noteTabCounter);
 
     projectsTab.addEventListener('click', () => {
     displayTasks('projects');

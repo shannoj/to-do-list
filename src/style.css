@@ -252,6 +252,37 @@ body{
     background-color: lightblue;
 }
 
+/*.counter{
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+} */
+
+#todo-tab-counter{
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+}
+
+#note-tab-counter{
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+}
+
+#projects-tab-counter{
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+}
+
 @keyframes slideIn {
     0% {
         transform: translateY(-100%); /* Offscreen above */
