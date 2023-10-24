@@ -186,20 +186,34 @@ body{
 #task-name{
     width: 15%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #task-details-DOM{
     width: 50%;
     height: 100%;
     display: flex;
+    align-items: center;
+}
+
+#task-due-date-div{
+    height: 100%;
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #delete-div{
     margin: 10px;
+    height: 50%;
 }
 
 #edit-div{
     margin: 10px;
+    height: 50%;
 }
 
 #edit-picture{
@@ -307,6 +321,22 @@ body{
     align-items: center;
     justify-content: flex-start;
     margin-left: 10px
+}
+
+#icon-container{
+    height: 100%;
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#task-checkbox-container{
+    height: 100%;
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @keyframes slideIn {

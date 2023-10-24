@@ -261,6 +261,9 @@ function displayTasks(tabType) {
         deletePicture.src = deleteIcon;
         deletePicture.setAttribute('id', 'delete-picture');
 
+        const iconContainer = document.createElement('div');
+        iconContainer.setAttribute('id', 'icon-container');
+
         let taskType = task.type;
         const taskDueDate = task.date;
         const taskDetails = task.details;
@@ -281,17 +284,27 @@ function displayTasks(tabType) {
 
         container.appendChild(taskDiv);
 
+        const taskDetailsText = document.createElement('div');
+        taskDetailsText.setAttribute('id', 'task-details-text');
+        const taskNameText = document.createElement('div');
+        taskNameText.setAttribute('id', 'task-name-text');
+        const taskDateText = document.createElement('div');
+        taskDateText.setAttribute('id', 'task-date-text');
+
         const taskName = document.createElement('div');
         taskName.setAttribute('id', 'task-name');
-        taskName.innerHTML = taskType;
+        taskNameText.innerHTML = taskType;
+        taskName.appendChild(taskNameText);
 
         const taskDetailsDiv = document.createElement('div');
         taskDetailsDiv.setAttribute('id', 'task-details-DOM');
-        taskDetailsDiv.innerHTML = taskDetails;
+        taskDetailsText.innerHTML = taskDetails;
+        taskDetailsDiv.appendChild(taskDetailsText)
 
         const taskDueDateDiv = document.createElement('div');
         taskDueDateDiv.setAttribute('id', 'task-due-date-div');
-        taskDueDateDiv.innerHTML = 'Due on: ' + taskDueDate;
+        taskDateText.innerHTML = 'Due on: ' + taskDueDate;
+        taskDueDateDiv.appendChild(taskDateText);
 
         const deleteDiv = document.createElement('div');
         deleteDiv.setAttribute('id', 'delete-div');
@@ -307,11 +320,22 @@ function displayTasks(tabType) {
             editTask(task, taskDiv, taskType);
         });
 
+        iconContainer.appendChild(editDiv);
+        iconContainer.appendChild(deleteDiv);
+
+        const taskCheckBoxContainer = document.createElement('div');
+        taskCheckBoxContainer.setAttribute('id', 'task-checkbox-container');
+        const taskCheckBox = document.createElement('input');
+        taskCheckBox.setAttribute('id', 'task-checkbox');
+        taskCheckBox.type = 'checkbox';
+        taskCheckBox.checked = false;
+        taskCheckBoxContainer.appendChild(taskCheckBox);
+
+        taskDiv.appendChild(taskCheckBoxContainer);
         taskDiv.appendChild(taskName);
         taskDiv.appendChild(taskDetailsDiv);
         taskDiv.appendChild(taskDueDateDiv);
-        taskDiv.appendChild(editDiv);
-        taskDiv.appendChild(deleteDiv);
+        taskDiv.appendChild(iconContainer);
     });
 
     const projectsTabCounter = document.getElementById('projects-tab-counter');
@@ -359,6 +383,9 @@ function addTask(){
     const deletePicture = new Image();
     deletePicture.src = deleteIcon;
     deletePicture.setAttribute('id', 'delete-picture');
+
+    const iconContainer = document.createElement('div');
+    iconContainer.setAttribute('id', 'icon-container');
 
     let taskType = document.getElementById('type').value;
     const taskDueDate = document.getElementById('date').value;
@@ -458,11 +485,22 @@ function addTask(){
         editTask(timeStamp, taskDiv, taskType);
     });
 
+    const taskCheckBoxContainer = document.createElement('div');
+    taskCheckBoxContainer.setAttribute('id', 'task-checkbox-container');
+    const taskCheckBox = document.createElement('input');
+    taskCheckBox.setAttribute('id', 'task-checkbox');
+    taskCheckBox.type = 'checkbox';
+    taskCheckBox.checked = false;
+    taskCheckBoxContainer.appendChild(taskCheckBox);
+
+    iconContainer.appendChild(editDiv);
+    iconContainer.appendChild(deleteDiv);
+
+    taskDiv.appendChild(taskCheckBoxContainer);
     taskDiv.appendChild(taskName);
     taskDiv.appendChild(taskDetailsDiv);
     taskDiv.appendChild(taskDueDateDiv);
-    taskDiv.appendChild(editDiv);
-    taskDiv.appendChild(deleteDiv);
+    taskDiv.appendChild(iconContainer);
 
     displayTasks(taskType.toLowerCase() + 's');
 
