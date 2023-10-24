@@ -669,21 +669,21 @@ function createElements(){
 
     const projectsTab = document.createElement('div');
     projectsTab.setAttribute('id', 'projects-tab')
-    projectsTab.innerHTML = 'Projects';
+    projectsTab.innerHTML = '  Projects';
     let projectsTabCounter = document.createElement('div');
     projectsTabCounter.setAttribute('id', 'projects-tab-counter');
     projectsTabCounter.innerHTML = projectList.length;
 
     const todoTab = document.createElement('div');
     todoTab.setAttribute('id', 'todo-tab');
-    todoTab.innerHTML = 'To Do';
+    todoTab.innerHTML = '  To Do';
     let todoTabCounter = document.createElement('div');
     todoTabCounter.setAttribute('id', 'todo-tab-counter');
     todoTabCounter.innerHTML = todoList.length;
 
     const noteTab = document.createElement('div');
     noteTab.setAttribute('id', 'note-tab');
-    noteTab.innerHTML = 'Notes';
+    noteTab.innerHTML = '  Notes';
     let noteTabCounter = document.createElement('div');
     noteTabCounter.setAttribute('id', 'note-tab-counter');
 
