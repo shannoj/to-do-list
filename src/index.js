@@ -7,8 +7,32 @@ let projectList = [];
 let notesList = [];
 let todoList = [];
 
-function returnListLength(list){
-    return list.length();
+// Function to update the counter for a specific task type
+function updateTaskCounter(taskType) {
+    const noteTabCounter = document.getElementById('note-tab-counter'); 
+    const projectsTabCounter = document.getElementById('projects-tab-counter');
+    const todoTabCounter = document.getElementById('todo-tab-counter');
+
+    if (projectList.length > 0){
+        projectsTabCounter.style.display = 'flex';
+        projectsTabCounter.innerHTML = projectList.length;
+    } else {
+        projectsTabCounter.style.display = 'none';
+    }
+
+    if (notesList.length > 0){
+        noteTabCounter.style.display = 'flex';
+        noteTabCounter.innerHTML = notesList.length;
+    } else {
+        noteTabCounter.style.display = 'none';
+    }
+
+    if (todoList.length > 0){
+        todoTabCounter.style.display = 'flex';
+        todoTabCounter.innerHTML = todoList.length;
+    } else {
+        todoTabCounter.style.display = 'none';
+    }
 }
 
 // Storing tasks in local storage
@@ -62,6 +86,8 @@ function deleteTask(taskId, taskType, task) {
 
     // Remove the task from the DOM
     removeElement(taskId);
+
+    updateTaskCounter(taskType);
 
     saveTasksToLocalStorage();
 }
@@ -154,6 +180,8 @@ function editTask(task, taskDiv, taskType) {
         } else if (newTaskType === 'Note') {
             notesList.push(task);
         }
+
+        updateTaskCounter(newTaskType);
 
         // Update the local storage with the edited task data
         saveTasksToLocalStorage();
@@ -442,6 +470,8 @@ function addTask(){
      }
      }
 
+    updateTaskCounter(taskType);
+
     removeElement('pop-up-container');
 };
 
@@ -697,3 +727,8 @@ document.body.appendChild(createElements());
 loadTasksFromLocalStorage();
 // Display the loaded tasks
 displayTasks('projects'); // You can specify the appropriate tab here
+
+// Initialize and display the counter on page load
+updateTaskCounter('projects');
+updateTaskCounter('todo');
+updateTaskCounter('notes');
