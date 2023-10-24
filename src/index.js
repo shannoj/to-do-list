@@ -666,26 +666,36 @@ function createElements(){
     const sideBarTasks = document.createElement('div');
     sideBarTasks.setAttribute('id', 'side-bar-tasks');
     sideBar.appendChild(sideBarTasks);
+    const projectsTabContainer = document.createElement('div');
+    projectsTabContainer.setAttribute('class', 'tab-container');
+    const notesTabContainer = document.createElement('div');
+    notesTabContainer.setAttribute('class', 'tab-container');
+    const todoTabContainer = document.createElement('div');
+    todoTabContainer.setAttribute('class', 'tab-container');
 
     const projectsTab = document.createElement('div');
     projectsTab.setAttribute('id', 'projects-tab')
-    projectsTab.innerHTML = '  Projects';
+    projectsTabContainer.innerHTML = 'Projects';
     let projectsTabCounter = document.createElement('div');
     projectsTabCounter.setAttribute('id', 'projects-tab-counter');
     projectsTabCounter.innerHTML = projectList.length;
 
     const todoTab = document.createElement('div');
     todoTab.setAttribute('id', 'todo-tab');
-    todoTab.innerHTML = '  To Do';
+    todoTabContainer.innerHTML = '  To Do';
     let todoTabCounter = document.createElement('div');
     todoTabCounter.setAttribute('id', 'todo-tab-counter');
     todoTabCounter.innerHTML = todoList.length;
 
     const noteTab = document.createElement('div');
     noteTab.setAttribute('id', 'note-tab');
-    noteTab.innerHTML = '  Notes';
+    notesTabContainer.innerHTML = '  Notes';
     let noteTabCounter = document.createElement('div');
     noteTabCounter.setAttribute('id', 'note-tab-counter');
+
+    projectsTab.appendChild(projectsTabContainer);
+    todoTab.appendChild(todoTabContainer);
+    noteTab.appendChild(notesTabContainer);
 
     sideBarTasks.appendChild(projectsTab);
     sideBarTasks.appendChild(todoTab);
@@ -696,33 +706,37 @@ function createElements(){
 
     projectsTab.addEventListener('click', () => {
     displayTasks('projects');
-    projectsTab.style.backgroundColor = '#B0E0E6';
+    projectsTab.style.backgroundColor = '#90ee90';
     todoTab.style.backgroundColor = '';
     noteTab.style.backgroundColor = '';
     });
 
     todoTab.addEventListener('click', () => {
     displayTasks('todo');
-    todoTab.style.backgroundColor = '#B0E0E6';
+    todoTab.style.backgroundColor = '#90ee90';
     noteTab.style.backgroundColor = '';
     projectsTab.style.backgroundColor = '';
     });
 
     noteTab.addEventListener('click', () => {
     displayTasks('notes');
-    noteTab.style.backgroundColor = '#B0E0E6';
+    noteTab.style.backgroundColor = '#90ee90';
     projectsTab.style.backgroundColor = '';
     todoTab.style.backgroundColor = '';
     });
 
     //creating the button that allows you to add tasks
+    const addButtonContainer = document.createElement('div');
+    addButtonContainer.setAttribute('id', 'add-button-container');
     const addButton = document.createElement('button');
     addButton.setAttribute('id', 'add-button');
     addButton.innerHTML = "New Task";
 
+    addButtonContainer.appendChild(addButton);
+
     addButton.addEventListener('click', taskPopUp);
 
-    sideBar.appendChild(addButton);
+    sideBar.appendChild(addButtonContainer);
 
     return container;
 }
