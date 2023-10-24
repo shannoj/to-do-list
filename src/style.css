@@ -21,7 +21,7 @@ body{
     justify-content: space-between;
     flex-direction: column;
     background-color: #3498db; /* Sidebar background color */
-    color: #fff; /* Text color */
+    color: #000000; /* Text color */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
     z-index: 1; /* Place it above the page content */
 }

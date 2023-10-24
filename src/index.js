@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { uniqueId } from 'lodash';
 import './style.css';
 import editIcon from './editIcon.png';
 import deleteIcon from './deleteIcon.png';
@@ -6,6 +6,69 @@ import deleteIcon from './deleteIcon.png';
 let projectList = [];
 let notesList = [];
 let todoList = [];
+
+function incrementCounter(taskType) {
+    const projectListCounter = document.getElementById('projects-tab-counter');
+    const todoListCounter = document.getElementById('todo-tab-counter');
+    const notesListCounter = document.getElementById('note-tab-counter');
+
+    if (taskType === 'Project') {
+        let count = parseInt(projectListCounter.innerHTML, 10) + 1;
+        projectListCounter.innerHTML = count;
+        if (count != 0){
+            projectListCounter.style.display = 'flex';
+        }
+    } else if (taskType === 'To Do') {
+        let todoCount = parseInt(todoListCounter.innerHTML, 10) + 1;
+        todoListCounter.innerHTML = todoCount;
+        if (todoCount != 0){
+            todoListCounter.style.display = 'flex';
+        }
+    } else if (taskType === 'Note') {
+        let noteCount = parseInt(notesListCounter.innerHTML, 10) + 1;
+        notesListCounter.innerHTML = noteCount;
+        if (noteCount != 0){
+            notesListCounter.style.display = 'flex';
+        }
+    }
+}
+
+function decrementCounter(taskType) {
+    const projectListCounter = document.getElementById('projects-tab-counter');
+    const todoListCounter = document.getElementById('todo-tab-counter');
+    const notesListCounter = document.getElementById('note-tab-counter');
+
+    if (taskType === 'Project') {
+        let count = parseInt(projectListCounter.innerHTML, 10) - 1
+        projectListCounter.innerHTML = count;
+        if(count == 0){
+            projectListCounter.style.display = 'none';
+        }
+    } else if (taskType === 'To Do') {
+        let todoCount = parseInt(todoListCounter.innerHTML, 10) - 1;
+        todoListCounter.innerHTML = todoCount;
+        if(todoCount == 0){
+            todoListCounter.style.display = 'none';
+        }
+    } else if (taskType === 'Note') {
+        let noteCount = parseInt(notesListCounter.innerHTML, 10) - 1;
+        notesListCounter.innerHTML = noteCount;
+        if(noteCount == 0){
+            notesListCounter.style.display = 'none';
+        }
+    }
+}
+
+
+function generateUniqueID() {
+    const timestamp = Date.now().toString(36); // Convert the current timestamp to base 36
+    const random = Math.random().toString(36).substr(2, 5); // Generate a random string
+  
+    // Concatenate the timestamp and random part
+    const uniqueID = timestamp + random;
+  
+    return uniqueID;
+}
 
 function saveTaskCountersToLocalStorage() {
     const taskCounters = {
@@ -323,19 +386,34 @@ function displayTasks(tabType) {
         iconContainer.appendChild(editDiv);
         iconContainer.appendChild(deleteDiv);
 
+        let identifier = generateUniqueID();
+
         const taskCheckBoxContainer = document.createElement('div');
         taskCheckBoxContainer.setAttribute('id', 'task-checkbox-container');
         const taskCheckBox = document.createElement('input');
-        taskCheckBox.setAttribute('id', 'task-checkbox');
+        taskCheckBox.setAttribute('id', 'task-checkbox' + identifier);
         taskCheckBox.type = 'checkbox';
         taskCheckBox.checked = false;
         taskCheckBoxContainer.appendChild(taskCheckBox);
+
+        taskCheckBox.addEventListener('change', function () {
+            if (taskCheckBox.checked) {
+                // Checkbox is checked, increment the counter
+                decrementCounter(taskType); // You need to implement this function
+            } else {
+                // Checkbox is unchecked, decrement the counter
+                incrementCounter(taskType); // You need to implement this function
+            }
+        });
+        
 
         taskDiv.appendChild(taskCheckBoxContainer);
         taskDiv.appendChild(taskName);
         taskDiv.appendChild(taskDetailsDiv);
         taskDiv.appendChild(taskDueDateDiv);
         taskDiv.appendChild(iconContainer);
+
+        console.log(taskCheckBox.id);
     });
 
     const projectsTabCounter = document.getElementById('projects-tab-counter');
@@ -744,21 +822,21 @@ function createElements(){
 
     projectsTab.addEventListener('click', () => {
     displayTasks('projects');
-    projectsTab.style.backgroundColor = '#90ee90';
+    projectsTab.style.backgroundColor = '#ffffff';
     todoTab.style.backgroundColor = '';
     noteTab.style.backgroundColor = '';
     });
 
     todoTab.addEventListener('click', () => {
     displayTasks('todo');
-    todoTab.style.backgroundColor = '#90ee90';
+    todoTab.style.backgroundColor = '#ffffff';
     noteTab.style.backgroundColor = '';
     projectsTab.style.backgroundColor = '';
     });
 
     noteTab.addEventListener('click', () => {
     displayTasks('notes');
-    noteTab.style.backgroundColor = '#90ee90';
+    noteTab.style.backgroundColor = '#ffffff';
     projectsTab.style.backgroundColor = '';
     todoTab.style.backgroundColor = '';
     });
