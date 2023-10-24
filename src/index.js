@@ -7,6 +7,26 @@ let projectList = [];
 let notesList = [];
 let todoList = [];
 
+function saveTaskCountersToLocalStorage() {
+    const taskCounters = {
+        projects: projectList.length,
+        todo: todoList.length,
+        notes: notesList.length
+    };
+    localStorage.setItem('taskCounters', JSON.stringify(taskCounters));
+}
+
+function loadTaskCountersFromLocalStorage() {
+    const taskCounters = JSON.parse(localStorage.getItem('taskCounters'));
+    if (taskCounters) {
+        // Update the counters with the values from local storage
+        projectListCounter.innerHTML = taskCounters.projects;
+        todoListCounter.innerHTML = taskCounters.todo;
+        notesListCounter.innerHTML = taskCounters.notes;
+    }
+}
+
+
 // Function to update the counter for a specific task type
 function updateTaskCounter(taskType) {
     const noteTabCounter = document.getElementById('note-tab-counter'); 
@@ -33,6 +53,8 @@ function updateTaskCounter(taskType) {
     } else {
         todoTabCounter.style.display = 'none';
     }
+
+    saveTaskCountersToLocalStorage();
 }
 
 // Storing tasks in local storage
@@ -444,30 +466,14 @@ function addTask(){
 
     displayTasks(taskType.toLowerCase() + 's');
 
+    
+
     if (taskType === 'projects') {
         projectTab.click();
-        projectsTabCounter.innerHTML = projectList.length;
-        if (projectList.length > 0){
-         projectsTabCounter.style.display = 'flex';
-     } else {
-        projectsTabCounter.style.display = 'none';
-     }
      } else if (taskType === 'todo' || taskType === 'To Do' || taskType === 'to dos') {
         todoTab.click();
-        todoTabCounter.innerHTML = todoList.length;
-        if (todoList.length > 0){
-         todoTabCounter.style.display = 'flex';
-     } else {
-        todoTabCounter.style.display = 'none';
-     }
      } else if (taskType === 'notes') {
         noteTab.click();
-        noteTabCounter.innerHTML = notesList.length;
-        if (notesList.length > 0){
-         noteTabCounter.style.display = 'flex';
-     } else {
-        notetabCounter.style.display = 'none';
-     }
      }
 
     updateTaskCounter(taskType);
@@ -725,10 +731,11 @@ document.body.appendChild(createElements());
 
 // Load tasks from local storage when the page loads
 loadTasksFromLocalStorage();
-// Display the loaded tasks
-displayTasks('projects'); // You can specify the appropriate tab here
 
-// Initialize and display the counter on page load
+// Update the counters for each task type after loading tasks
 updateTaskCounter('projects');
 updateTaskCounter('todo');
 updateTaskCounter('notes');
+
+// Display the loaded tasks
+displayTasks('projects');
