@@ -6,57 +6,71 @@ import deleteIcon from './deleteIcon.png';
 let projectList = [];
 let notesList = [];
 let todoList = [];
+let projectTabCounter = 0;
+let todoTabCounter = 0;
+let notesTabCounter = 0;
+
 
 function incrementCounter(taskType) {
-    const projectListCounter = document.getElementById('projects-tab-counter');
+    const projectListCounter = document.getElementById('project-tab-counter');
     const todoListCounter = document.getElementById('todo-tab-counter');
     const notesListCounter = document.getElementById('note-tab-counter');
 
     if (taskType === 'Project') {
-        let count = parseInt(projectListCounter.innerHTML, 10) + 1;
-        projectListCounter.innerHTML = count;
-        if (count != 0){
+        projectTabCounter += 1;
+        projectListCounter.innerHTML = projectTabCounter;
+        if (projectTabCounter != 0){
             projectListCounter.style.display = 'flex';
         }
     } else if (taskType === 'To Do') {
-        let todoCount = parseInt(todoListCounter.innerHTML, 10) + 1;
-        todoListCounter.innerHTML = todoCount;
-        if (todoCount != 0){
+        todoTabCounter += 1;
+        todoListCounter.innerHTML = todoTabCounter;
+        if (todoTabCounter != 0){
             todoListCounter.style.display = 'flex';
         }
     } else if (taskType === 'Note') {
-        let noteCount = parseInt(notesListCounter.innerHTML, 10) + 1;
-        notesListCounter.innerHTML = noteCount;
-        if (noteCount != 0){
+        notesTabCounter += 1;
+        notesListCounter.innerHTML = notesTabCounter;
+        if (notesTabCounter != 0){
             notesListCounter.style.display = 'flex';
         }
     }
+
+    saveCountersToLocalStorage();
 }
 
 function decrementCounter(taskType) {
-    const projectListCounter = document.getElementById('projects-tab-counter');
+    const projectListCounter = document.getElementById('project-tab-counter');
     const todoListCounter = document.getElementById('todo-tab-counter');
     const notesListCounter = document.getElementById('note-tab-counter');
 
     if (taskType === 'Project') {
-        let count = parseInt(projectListCounter.innerHTML, 10) - 1
-        projectListCounter.innerHTML = count;
-        if(count == 0){
+        if (projectTabCounter > 0){
+        projectTabCounter -= 1;
+        projectListCounter.innerHTML = projectTabCounter;
+        if(projectTabCounter == 0){
             projectListCounter.style.display = 'none';
         }
+    }
     } else if (taskType === 'To Do') {
-        let todoCount = parseInt(todoListCounter.innerHTML, 10) - 1;
-        todoListCounter.innerHTML = todoCount;
-        if(todoCount == 0){
+        if (todoTabCounter > 0){
+        todoTabCounter -= 1;
+        todoListCounter.innerHTML = todoTabCounter;
+        if(todoTabCounter == 0){
             todoListCounter.style.display = 'none';
         }
+    }
     } else if (taskType === 'Note') {
-        let noteCount = parseInt(notesListCounter.innerHTML, 10) - 1;
-        notesListCounter.innerHTML = noteCount;
-        if(noteCount == 0){
+        if (notesTabCounter > 0){
+        notesTabCounter -= 1;
+        notesListCounter.innerHTML = notesTabCounter;
+        if(notesTabCounter == 0){
             notesListCounter.style.display = 'none';
         }
     }
+    }
+
+    saveCountersToLocalStorage();
 }
 
 
@@ -70,59 +84,33 @@ function generateUniqueID() {
     return uniqueID;
 }
 
-function saveTaskCountersToLocalStorage() {
-    const taskCounters = {
-        projects: projectList.length,
-        todo: todoList.length,
-        notes: notesList.length
-    };
-    localStorage.setItem('taskCounters', JSON.stringify(taskCounters));
-}
-
-function loadTaskCountersFromLocalStorage() {
-    const taskCounters = JSON.parse(localStorage.getItem('taskCounters'));
-    if (taskCounters) {
-        // Update the counters with the values from local storage
-        projectListCounter.innerHTML = taskCounters.projects;
-        todoListCounter.innerHTML = taskCounters.todo;
-        notesListCounter.innerHTML = taskCounters.notes;
-    }
-}
-
-
-// Function to update the counter for a specific task type
-function updateTaskCounter(taskType) {
-    const noteTabCounter = document.getElementById('note-tab-counter'); 
-    const projectsTabCounter = document.getElementById('projects-tab-counter');
-    const todoTabCounter = document.getElementById('todo-tab-counter');
-
-    if (projectList.length > 0){
-        projectsTabCounter.style.display = 'flex';
-        projectsTabCounter.innerHTML = projectList.length;
-    } else {
-        projectsTabCounter.style.display = 'none';
-    }
-
-    if (notesList.length > 0){
-        noteTabCounter.style.display = 'flex';
-        noteTabCounter.innerHTML = notesList.length;
-    } else {
-        noteTabCounter.style.display = 'none';
-    }
-
-    if (todoList.length > 0){
-        todoTabCounter.style.display = 'flex';
-        todoTabCounter.innerHTML = todoList.length;
-    } else {
-        todoTabCounter.style.display = 'none';
-    }
-
-    saveTaskCountersToLocalStorage();
-}
-
 // Storing tasks in local storage
 function saveTasksToLocalStorage() {
     localStorage.setItem('tasks', JSON.stringify({ projects: projectList, notes: notesList, todo: todoList }));
+}
+
+function saveCountersToLocalStorage() {
+    localStorage.setItem('project counter', projectTabCounter);
+    localStorage.setItem('todo counter', todoTabCounter);
+    localStorage.setItem('note coutner', notesTabCounter);
+}
+
+function loadCountersFromLocalStorage(){
+    const projects = localStorage.getItem('project counter');
+    const todos = localStorage.getItem('todo counter');
+    const notes = localStorage.getItem('note counter');
+
+    if (projects){
+        projectTabCounter = projects;
+    }
+
+    if (todos){
+        todoTabCounter = todos;
+    }
+
+    if (notes){
+        notesTabCounter = notes;
+    }
 }
 
 function loadTasksFromLocalStorage() {
@@ -140,6 +128,7 @@ function task(type, date, details, priority){
     this.date = date;
     this.details = details;
     this.priority = priority;
+    this.checked = false;
 }
 
 //simple function to remove an element
@@ -150,7 +139,7 @@ function removeElement (elementid){
     };
 };
 
-function deleteTask(taskId, taskType, task) {
+function deleteTask(taskId, taskType, task, check) {
     // Remove the task from the respective list
     if (taskType === 'Project') {
         const index = projectList.indexOf(task);
@@ -172,7 +161,12 @@ function deleteTask(taskId, taskType, task) {
     // Remove the task from the DOM
     removeElement(taskId);
 
-    updateTaskCounter(taskType);
+    if (!check){
+        decrementCounter(taskType);
+    };
+
+    console.log(check);
+    console.log(taskId);
 
     saveTasksToLocalStorage();
 }
@@ -266,8 +260,6 @@ function editTask(task, taskDiv, taskType) {
             notesList.push(task);
         }
 
-        updateTaskCounter(newTaskType);
-
         // Update the local storage with the edited task data
         saveTasksToLocalStorage();
 
@@ -294,6 +286,7 @@ function displayTasks(tabType) {
     const projectTab = document.getElementById('projects-tab');
     const todoTab = document.getElementById('todo-tab');
     container.innerHTML = '';
+    console.log(tabType);
 
     let taskArray = [];
     if (tabType === 'projects') {
@@ -331,6 +324,8 @@ function displayTasks(tabType) {
         const taskDueDate = task.date;
         const taskDetails = task.details;
         var taskUrgencySelected = task.priority;
+        var taskChecked = task.checked;
+        console.log(task.checked);
 
         const container = document.getElementById('task-area');
         taskDiv.setAttribute('class', 'user-task-div');
@@ -373,7 +368,7 @@ function displayTasks(tabType) {
         deleteDiv.setAttribute('id', 'delete-div');
         deleteDiv.appendChild(deletePicture);
         deletePicture.addEventListener('click', function () {
-            deleteTask('user-task-' + taskDetails, taskType, task);
+            deleteTask('user-task-' + taskDetails, taskType, task, taskChecked);
         });
 
         const editDiv = document.createElement('div');
@@ -393,57 +388,36 @@ function displayTasks(tabType) {
         const taskCheckBox = document.createElement('input');
         taskCheckBox.setAttribute('id', 'task-checkbox' + identifier);
         taskCheckBox.type = 'checkbox';
-        taskCheckBox.checked = false;
+        taskCheckBox.checked = task.checked;
         taskCheckBoxContainer.appendChild(taskCheckBox);
 
         taskCheckBox.addEventListener('change', function () {
             if (taskCheckBox.checked) {
-                // Checkbox is checked, increment the counter
-                decrementCounter(taskType); // You need to implement this function
+                decrementCounter(taskType);
+                task.checked = true;
             } else {
-                // Checkbox is unchecked, decrement the counter
-                incrementCounter(taskType); // You need to implement this function
+                incrementCounter(taskType);
+                task.checked = false;
             }
         });
-        
 
         taskDiv.appendChild(taskCheckBoxContainer);
         taskDiv.appendChild(taskName);
         taskDiv.appendChild(taskDetailsDiv);
         taskDiv.appendChild(taskDueDateDiv);
-        taskDiv.appendChild(iconContainer);
-
-        console.log(taskCheckBox.id);
+        taskDiv.appendChild(iconContainer);         
     });
 
-    const projectsTabCounter = document.getElementById('projects-tab-counter');
+    const projectsTabCounter = document.getElementById('project-tab-counter');
     const todoTabCounter = document.getElementById('todo-tab-counter');
     const noteTabCounter = document.getElementById('note-tab-counter');
 
-    if (tabType === 'projects') {
+    if (tabType === 'projects' || tabType === 'Project') {
        projectTab.click();
-       projectsTabCounter.innerHTML = projectList.length;
-       if (projectList.length > 0){
-        projectsTabCounter.style.display = 'flex';
-    } else {
-        projectsTabCounter.style.display = 'none';
-     }
     } else if (tabType === 'todo' || tabType === 'To Do' || tabType === 'to dos') {
        todoTab.click();
-       todoTabCounter.innerHTML = todoList.length;
-       if (todoList.length > 0){
-        todoTabCounter.style.display = 'flex';
-    } else {
-        todoTabCounter.style.display = 'none';
-     }
-    } else if (tabType === 'notes') {
+    } else if (tabType === 'notes' || tabType === 'Notes' || tabType === 'Note' || tabType === 'note') {
        noteTab.click();
-       noteTabCounter.innerHTML = notesList.length;
-       if (notesList.length > 0){
-        noteTabCounter.style.display = 'flex';
-    } else {
-        noteTabCounter.style.display = 'none';
-     }
     }
 }
 
@@ -523,6 +497,7 @@ function addTask(){
     //creating new task element and adding it to an array
     let timeStamp = new Date().getTime();
     timeStamp = new task(taskType, taskDueDate, taskDetails, taskUrgencySelected);
+    timeStamp.checked = false;
 
     if (taskType === 'Project'){
         projectList.push(timeStamp);
@@ -569,6 +544,8 @@ function addTask(){
     taskCheckBox.setAttribute('id', 'task-checkbox');
     taskCheckBox.type = 'checkbox';
     taskCheckBox.checked = false;
+    incrementCounter(taskType);
+      
     taskCheckBoxContainer.appendChild(taskCheckBox);
 
     iconContainer.appendChild(editDiv);
@@ -582,8 +559,6 @@ function addTask(){
 
     displayTasks(taskType.toLowerCase() + 's');
 
-    
-
     if (taskType === 'projects') {
         projectTab.click();
      } else if (taskType === 'todo' || taskType === 'To Do' || taskType === 'to dos') {
@@ -591,8 +566,6 @@ function addTask(){
      } else if (taskType === 'notes') {
         noteTab.click();
      }
-
-    updateTaskCounter(taskType);
 
     removeElement('pop-up-container');
 };
@@ -793,7 +766,7 @@ function createElements(){
     projectsTab.setAttribute('id', 'projects-tab')
     projectsTabContainer.innerHTML = 'Projects';
     let projectsTabCounter = document.createElement('div');
-    projectsTabCounter.setAttribute('id', 'projects-tab-counter');
+    projectsTabCounter.setAttribute('id', 'project-tab-counter');
     projectsTabCounter.innerHTML = projectList.length;
 
     const todoTab = document.createElement('div');
@@ -861,11 +834,14 @@ document.body.appendChild(createElements());
 
 // Load tasks from local storage when the page loads
 loadTasksFromLocalStorage();
-
-// Update the counters for each task type after loading tasks
-updateTaskCounter('projects');
-updateTaskCounter('todo');
-updateTaskCounter('notes');
+loadCountersFromLocalStorage();
 
 // Display the loaded tasks
 displayTasks('projects');
+
+const projectListCounter = document.getElementById('project-tab-counter');
+const todoListCounter = document.getElementById('todo-tab-counter');
+const notesListCounter = document.getElementById('note-tab-counter');
+projectListCounter.innerHTML = projectTabCounter;
+todoListCounter.innerHTML = todoTabCounter;
+notesListCounter.innerHTML = notesTabCounter;
