@@ -90,26 +90,26 @@ function saveTasksToLocalStorage() {
 }
 
 function saveCountersToLocalStorage() {
-    localStorage.setItem('project counter', projectTabCounter);
-    localStorage.setItem('todo counter', todoTabCounter);
-    localStorage.setItem('note coutner', notesTabCounter);
+    localStorage.setItem('projectCounter', projectTabCounter);
+    localStorage.setItem('todoCounter', todoTabCounter);
+    localStorage.setItem('noteCoutner', notesTabCounter);
 }
 
 function loadCountersFromLocalStorage(){
-    const projects = localStorage.getItem('project counter');
-    const todos = localStorage.getItem('todo counter');
-    const notes = localStorage.getItem('note counter');
+    const projectsCounter = localStorage.getItem('projectCounter');
+    const todosCounter = localStorage.getItem('todoCounter');
+    const notesCounter = localStorage.getItem('noteCounter');
 
-    if (projects){
-        projectTabCounter = projects;
+    if (projectsCounter !== null){
+        projectTabCounter = parseInt(projectsCounter);
     }
 
-    if (todos){
-        todoTabCounter = todos;
+    if (todosCounter !== null){
+        todoTabCounter = parseInt(todosCounter);
     }
 
-    if (notes){
-        notesTabCounter = notes;
+    if (notesCounter !== null){
+        notesTabCounter = parseInt(notesCounter);
     }
 }
 
@@ -836,12 +836,14 @@ document.body.appendChild(createElements());
 loadTasksFromLocalStorage();
 loadCountersFromLocalStorage();
 
+console.log(projectTabCounter);
+
 // Display the loaded tasks
 displayTasks('projects');
-
 const projectListCounter = document.getElementById('project-tab-counter');
 const todoListCounter = document.getElementById('todo-tab-counter');
 const notesListCounter = document.getElementById('note-tab-counter');
 projectListCounter.innerHTML = projectTabCounter;
 todoListCounter.innerHTML = todoTabCounter;
 notesListCounter.innerHTML = notesTabCounter;
+console.log(projectTabCounter);
