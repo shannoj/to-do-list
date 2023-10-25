@@ -398,6 +398,7 @@ function displayTasks(tabType) {
                 incrementCounter(taskType);
                 task.checked = false;
             }
+            saveTasksToLocalStorage();
         });
 
         taskDiv.appendChild(taskCheckBoxContainer);
