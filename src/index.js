@@ -10,7 +10,6 @@ let projectTabCounter = 0;
 let todoTabCounter = 0;
 let notesTabCounter = 0;
 
-
 function incrementCounter(taskType) {
     const projectListCounter = document.getElementById('project-tab-counter');
     const todoListCounter = document.getElementById('todo-tab-counter');
@@ -92,7 +91,7 @@ function saveTasksToLocalStorage() {
 function saveCountersToLocalStorage() {
     localStorage.setItem('projectCounter', projectTabCounter);
     localStorage.setItem('todoCounter', todoTabCounter);
-    localStorage.setItem('noteCoutner', notesTabCounter);
+    localStorage.setItem('noteCounter', notesTabCounter);
 }
 
 function loadCountersFromLocalStorage(){
@@ -832,18 +831,30 @@ function createElements(){
 
 document.body.appendChild(createElements());
 
+document.addEventListener('DOMContentLoaded', function (){
+
 // Load tasks from local storage when the page loads
 loadTasksFromLocalStorage();
 loadCountersFromLocalStorage();
 
-console.log(projectTabCounter);
-
 // Display the loaded tasks
-displayTasks('projects');
 const projectListCounter = document.getElementById('project-tab-counter');
 const todoListCounter = document.getElementById('todo-tab-counter');
 const notesListCounter = document.getElementById('note-tab-counter');
 projectListCounter.innerHTML = projectTabCounter;
-todoListCounter.innerHTML = todoTabCounter;
-notesListCounter.innerHTML = notesTabCounter;
 console.log(projectTabCounter);
+if (projectTabCounter > 0){
+projectListCounter.style.display = 'flex';
+}
+todoListCounter.innerHTML = todoTabCounter;
+if (todoTabCounter > 0){
+    todoListCounter.style.display = 'flex';
+    }
+notesListCounter.innerHTML = notesTabCounter;
+if (notesTabCounter > 0){
+    notesListCounter.style.display = 'flex';
+    }
+displayTasks('projects');
+
+})
+
