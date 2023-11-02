@@ -28,6 +28,7 @@ body{
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 1%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #task-area{
@@ -188,6 +189,7 @@ body{
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
     z-index: 1; /* Place it above the page content */
     border-radius: 1.25%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #task-name{
