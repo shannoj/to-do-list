@@ -386,6 +386,7 @@ function displayTasks(tabType) {
         taskCheckBoxContainer.setAttribute('id', 'task-checkbox-container');
         const taskCheckBox = document.createElement('input');
         taskCheckBox.setAttribute('id', 'task-checkbox' + identifier);
+        taskCheckBox.setAttribute('class', 'task-checkbox');
         taskCheckBox.type = 'checkbox';
         taskCheckBox.checked = task.checked;
         taskCheckBoxContainer.appendChild(taskCheckBox);

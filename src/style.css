@@ -346,6 +346,15 @@ body{
     justify-content: center;
 }
 
+.task-checkbox{
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #999;
+        border-radius: 3px;
+        cursor: pointer;
+}
+
 @keyframes slideIn {
     0% {
         transform: translateY(-100%); /* Offscreen above */
