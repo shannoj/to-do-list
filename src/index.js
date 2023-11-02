@@ -10,6 +10,12 @@ let projectTabCounter = 0;
 let todoTabCounter = 0;
 let notesTabCounter = 0;
 
+function clearTaskCounters(){
+    projectTabCounter = 0;
+    todoTabCounter = 0;
+    notesTabCounter = 0;
+}
+
 function incrementCounter(taskType) {
     const projectListCounter = document.getElementById('project-tab-counter');
     const todoListCounter = document.getElementById('todo-tab-counter');
@@ -164,9 +170,6 @@ function deleteTask(taskId, taskType, task, check) {
         decrementCounter(taskType);
     };
 
-    console.log(check);
-    console.log(taskId);
-
     saveTasksToLocalStorage();
 }
 
@@ -225,6 +228,13 @@ function editTask(task, taskDiv, taskType) {
 
     saveButton.addEventListener('click', function () {
         const newTaskType = taskTypeSelect.value;
+
+        const isTaskChecked = task.checked;
+
+        if (!isTaskChecked || taskType !== newTaskType) {
+            decrementCounter(taskType);
+        }
+
         
         // Remove the old task from its list
         if (taskType === 'Project') {
@@ -253,10 +263,19 @@ function editTask(task, taskDiv, taskType) {
         // Add the edited task to the new list
         if (newTaskType === 'Project') {
             projectList.push(task);
+            if(!isTaskChecked){
+                incrementCounter('Project');
+            }
         } else if (newTaskType === 'To Do') {
             todoList.push(task);
+            if(!isTaskChecked){
+                incrementCounter('To Do');
+            }
         } else if (newTaskType === 'Note') {
             notesList.push(task);
+            if(!isTaskChecked){
+                incrementCounter('Note');
+            }
         }
 
         // Update the local storage with the edited task data
