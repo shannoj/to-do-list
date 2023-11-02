@@ -324,19 +324,23 @@ function displayTasks(tabType) {
         const taskDetails = task.details;
         var taskUrgencySelected = task.priority;
         var taskChecked = task.checked;
-        console.log(task.checked);
+
+        const taskUrgencyDiv = document.createElement('div');
+        taskUrgencyDiv.setAttribute('class', 'task-urgency-div');
+        taskUrgencyDiv.setAttribute('id', 'task-urgeny'+taskDetails);
 
         const container = document.getElementById('task-area');
         taskDiv.setAttribute('class', 'user-task-div');
         taskDiv.setAttribute('id', 'user-task-' + taskDetails);
+        taskDiv.appendChild(taskUrgencyDiv);
 
         // Setting background color of task to match the urgency
         if (taskUrgencySelected == 'urgent') {
-            taskDiv.style.backgroundColor = 'red';
+            taskUrgencyDiv.style.backgroundColor = 'red';
         } else if (taskUrgencySelected == 'medium') {
-            taskDiv.style.backgroundColor = 'yellow';
+            taskUrgencyDiv.style.backgroundColor = 'yellow';
         } else if (taskUrgencySelected == 'relaxed') {
-            taskDiv.style.backgroundColor = 'lightblue';
+            taskUrgencyDiv.style.backgroundColor = 'lightblue';
         }
 
         container.appendChild(taskDiv);

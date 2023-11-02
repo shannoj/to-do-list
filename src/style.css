@@ -180,9 +180,9 @@ body{
     width: 85%;
     display: flex;
     justify-content: space-evenly;
-    background-color: #808080;
-    padding-bottom: 15px;
-    padding-top: 15px;
+    background-color: white;
+    border-style: solid;
+    border-color: black;
     margin-bottom: 15px;
     margin-top: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
@@ -353,6 +353,13 @@ body{
         border: 2px solid #999;
         border-radius: 3px;
         cursor: pointer;
+}
+
+.task-urgency-div{
+    height: 100%;
+    width: 1%;
+    border-top-right-radius: 2%;
+    border-bottom-right-radius: 2%;
 }
 
 @keyframes slideIn {
