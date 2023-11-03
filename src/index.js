@@ -128,7 +128,8 @@ function loadTasksFromLocalStorage() {
 }
 
 //function that initializes a task
-function task(type, date, details, priority){
+function task(type, title, date, details, priority){
+    this.title = title;
     this.type = type;
     this.date = date;
     this.details = details;
@@ -304,7 +305,6 @@ function displayTasks(tabType) {
     const projectTab = document.getElementById('projects-tab');
     const todoTab = document.getElementById('todo-tab');
     container.innerHTML = '';
-    console.log(tabType);
 
     let taskArray = [];
     if (tabType === 'projects') {
