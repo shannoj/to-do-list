@@ -339,6 +339,7 @@ function displayTasks(tabType) {
         iconContainer.setAttribute('id', 'icon-container');
 
         let taskType = task.type;
+        const taskTitle = task.title;
         const taskDueDate = task.date;
         const taskDetails = task.details;
         var taskUrgencySelected = task.priority;
@@ -366,15 +367,15 @@ function displayTasks(tabType) {
 
         const taskDetailsText = document.createElement('div');
         taskDetailsText.setAttribute('id', 'task-details-text');
-        const taskNameText = document.createElement('div');
-        taskNameText.setAttribute('id', 'task-name-text');
+        const taskTitleText = document.createElement('div');
+        taskTitleText.setAttribute('id', 'task-name-text');
         const taskDateText = document.createElement('div');
         taskDateText.setAttribute('id', 'task-date-text');
 
         const taskName = document.createElement('div');
         taskName.setAttribute('id', 'task-name');
-        taskNameText.innerHTML = taskType;
-        taskName.appendChild(taskNameText);
+        taskTitleText.innerHTML = taskTitle;
+        taskName.appendChild(taskTitleText);
 
         const taskDetailsDiv = document.createElement('div');
         taskDetailsDiv.setAttribute('id', 'task-details-DOM');
