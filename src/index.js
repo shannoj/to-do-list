@@ -358,7 +358,7 @@ function displayTasks(tabType) {
             taskUrgencyDiv.style.backgroundColor = 'red';
         } else if (taskUrgencySelected == 'medium') {
             taskUrgencyDiv.style.backgroundColor = 'yellow';
-        } else if (taskUrgencySelected == 'relaxed') {
+        } else if (taskUrgencySelected == 'no rush') {
             taskUrgencyDiv.style.backgroundColor = 'lightblue';
         }
 
