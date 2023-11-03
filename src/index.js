@@ -464,6 +464,7 @@ function addTask(){
     iconContainer.setAttribute('id', 'icon-container');
 
     let taskType = document.getElementById('type').value;
+    const taskTitle = document.getElementById('task-title').value;
     const taskDueDate = document.getElementById('date').value;
     const taskDetails = document.getElementById('details').value;
     const formInput = document.getElementById('task-form');
@@ -520,7 +521,7 @@ function addTask(){
 
     //creating new task element and adding it to an array
     let timeStamp = new Date().getTime();
-    timeStamp = new task(taskType, taskDueDate, taskDetails, taskUrgencySelected);
+    timeStamp = new task(taskType, taskTitle, taskDueDate, taskDetails, taskUrgencySelected);
     timeStamp.checked = false;
 
     if (taskType === 'Project'){
