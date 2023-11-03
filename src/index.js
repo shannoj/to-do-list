@@ -197,6 +197,10 @@ function editTask(task, taskDiv, taskType) {
     });
     taskTypeSelect.value = task.type;
 
+    const taskTitleInput = document.createElement('input');
+    taskTitleInput.setAttribute('type', 'text');
+    taskTitleInput.value = task.title;
+
     const taskDateInput = document.createElement('input');
     taskDateInput.setAttribute('type', 'date');
     taskDateInput.value = task.date;
@@ -257,6 +261,7 @@ function editTask(task, taskDiv, taskType) {
 
         // Update the task object with the edited details
         task.type = newTaskType; // Update the task type
+        task.title = taskTitleInput.value;
         task.date = taskDateInput.value;
         task.details = taskDetailsInput.value;
         task.priority = taskPriorityDiv.querySelector('input[type="radio"]:checked').value;
@@ -291,6 +296,7 @@ function editTask(task, taskDiv, taskType) {
 
     // Append the form elements to the edit form
     taskForm.appendChild(taskTypeSelect);
+    taskForm.appendChild(taskTitleInput);
     taskForm.appendChild(taskDateInput);
     taskForm.appendChild(taskDetailsInput);
     taskForm.appendChild(taskPriorityDiv);
