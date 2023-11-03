@@ -631,6 +631,17 @@ function taskPopUp() {
     const taskType = document.createElement('div');
     taskType.setAttribute('id', 'task-type');
 
+    const taskTitleDiv = document.createElement('div');
+    taskTitleDiv.setAttribute('id', 'task-title-div');
+
+    const taskTitle = document.createElement('input');
+    taskTitle.setAttribute('type', 'text');
+    taskTitle.setAttribute('id', 'task-title');
+
+    const taskTitleLabel = document.createElement('label');
+    taskTitleLabel.setAttribute('for', 'task-title');
+    taskTitleLabel.innerHTML = 'Title of Task: ';
+
     const taskTypeLabel = document.createElement('label');
     taskTypeLabel.setAttribute('for', 'type');
     taskTypeLabel.innerHTML = "Type of Task: ";
@@ -661,7 +672,11 @@ function taskPopUp() {
     taskTypeType.appendChild(toDo);
     taskTypeType.appendChild(note);
 
+    taskTitleDiv.appendChild(taskTitleLabel);
+    taskTitleDiv.appendChild(taskTitle);
+
     questionContainer.appendChild(taskType);
+    questionContainer.appendChild(taskTitleDiv);
 
     //creating form questions for the due date of the task
     const taskDate = document.createElement('div');
