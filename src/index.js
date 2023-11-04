@@ -2,6 +2,7 @@ import _, { uniqueId } from 'lodash';
 import './style.css';
 import editIcon from './editIcon.png';
 import deleteIcon from './deleteIcon.png';
+import downArrow from './down-arrow.png';
 
 let projectList = [];
 let notesList = [];
@@ -341,6 +342,11 @@ function displayTasks(tabType) {
         deletePicture.src = deleteIcon;
         deletePicture.setAttribute('id', 'delete-picture');
 
+        const downArrowPic = new Image();
+        downArrowPic.src = downArrow;
+        downArrowPic.setAttribute('class', 'down-arrow');
+
+
         const iconContainer = document.createElement('div');
         iconContainer.setAttribute('id', 'icon-container');
 
@@ -416,6 +422,7 @@ function displayTasks(tabType) {
         dropDownContainer.setAttribute('class', 'drop-down-container');
         const dropDownButton = document.createElement('button');
         dropDownButton.setAttribute('class', 'drop-down-button');
+        dropDownButton.appendChild(downArrowPic); 
         dropDownButton.setAttribute('id', 'drop-down-button' + identifier);
         dropDownContainer.appendChild(dropDownButton);
 

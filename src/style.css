@@ -364,6 +364,32 @@ body{
     border-bottom-right-radius: 2%;
 }
 
+.drop-down-container{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5%;
+}
+
+.drop-down-button{
+    height: 25px;
+    width: 27px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-style: solid;
+    border-color: black;
+    cursor: pointer;
+}
+
+.down-arrow{
+    height: 100%;
+    width: 100%;
+}
+
 @keyframes slideIn {
     0% {
         transform: translateY(-100%); /* Offscreen above */
