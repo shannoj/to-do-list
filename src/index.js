@@ -412,6 +412,13 @@ function displayTasks(tabType) {
 
         let identifier = generateUniqueID();
 
+        const dropDownContainer = document.createElement('div');
+        dropDownContainer.setAttribute('class', 'drop-down-container');
+        const dropDownButton = document.createElement('button');
+        dropDownButton.setAttribute('class', 'drop-down-button');
+        dropDownButton.setAttribute('id', 'drop-down-button' + identifier);
+        dropDownContainer.appendChild(dropDownButton);
+
         const taskCheckBoxContainer = document.createElement('div');
         taskCheckBoxContainer.setAttribute('id', 'task-checkbox-container');
         const taskCheckBox = document.createElement('input');
@@ -436,7 +443,8 @@ function displayTasks(tabType) {
         taskDiv.appendChild(taskName);
         taskDiv.appendChild(taskDetailsDiv);
         taskDiv.appendChild(taskDueDateDiv);
-        taskDiv.appendChild(iconContainer);         
+        taskDiv.appendChild(iconContainer);
+        taskDiv.appendChild(dropDownContainer);         
     });
 
     const projectsTabCounter = document.getElementById('project-tab-counter');
