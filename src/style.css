@@ -201,7 +201,7 @@ body{
 }
 
 #task-details-DOM{
-    width: 50%;
+    width: 40%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -209,7 +209,7 @@ body{
 
 #task-due-date-div{
     height: 100%;
-    width: 15%;
+    width: 20%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -369,20 +369,23 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 5%;
+    width: 7%;
 }
 
 .drop-down-button{
-    height: 25px;
-    width: 27px;
+    height: 30px;
+    width: 30px;
     border-radius: 50%;
     background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-style: solid;
-    border-color: black;
+    border-style: none;
     cursor: pointer;
+}
+
+.drop-down-button:hover{
+    background-color: lightgray;
 }
 
 .down-arrow{
